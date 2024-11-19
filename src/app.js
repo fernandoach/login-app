@@ -1,6 +1,7 @@
 import express from 'express'
 import { fileURLToPath } from 'url'
 import { join, dirname } from 'path'
+import { authRoutes } from './routes/auth.js'
 
 // filename y dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -15,13 +16,12 @@ server.use(express.static('public'))
 server.set('views', join(__dirname, 'views'))
 server.use(express.urlencoded({ extended: true }))
 
+// routes
+server.use('/auth', authRoutes)
+
 // endpoints
 server.get('/', (req, res) => {
   return res.render('index.ejs')
-})
-
-server.get('/login', (req, res) => {
-  return res.render('auth/login.ejs')
 })
 
 // listener
