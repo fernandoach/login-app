@@ -4,6 +4,7 @@ import mssql from 'mssql'
 const createUser = async (nombre, edad, usuario, passwd) => {
   try {
     const connection = await getConnection()
+    console.log(nombre, edad, usuario, passwd)
     const query = await connection
       .request()
       .input('nombre', mssql.VarChar, nombre)
@@ -12,7 +13,7 @@ const createUser = async (nombre, edad, usuario, passwd) => {
       .input('passwd', mssql.VarChar, passwd)
       .query(
         `
-          INSERT INTO(nombre, edad, usuario, passwd)
+          INSERT INTO Usuario(nombre, edad, usuario, passwd)
           VALUES(@nombre, @edad, @usuario, @passwd);
         `
       )

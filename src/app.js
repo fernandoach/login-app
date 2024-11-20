@@ -2,6 +2,11 @@ import express from 'express'
 import { fileURLToPath } from 'url'
 import { join, dirname } from 'path'
 import { authRoutes } from './routes/auth.js'
+import cookieParser from 'cookie-parser'
+import dotenv from 'dotenv'
+
+// config dotenv
+dotenv.config()
 
 // filename y dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -15,6 +20,7 @@ server.set('view engine', 'ejs')
 server.use(express.static('public'))
 server.set('views', join(__dirname, 'views'))
 server.use(express.urlencoded({ extended: true }))
+server.use(cookieParser())
 
 // routes
 server.use('/auth', authRoutes)
