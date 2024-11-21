@@ -21,7 +21,8 @@ authRoutes.post('/login', async (req, res) => {
     }
     const secret = process.env.JWT_SECRET
     const token = jwt.sign({ usuario: user[0].usuario }, secret, { expiresIn: '1h' })
-    console.log(token)
+    res.cookie('jwt', token, { httpOnly: true })
+    return res.redirect('/panel/')
   } catch (error) {
     console.log(error)
     return res.json(error)
