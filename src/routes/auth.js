@@ -20,7 +20,7 @@ authRoutes.post('/login', async (req, res) => {
       return res.redirect('/auth/login')
     }
     const secret = process.env.JWT_SECRET
-    const token = jwt.sign({ usuario: user[0].usuario }, secret, { expiresIn: '1h' })
+    const token = jwt.sign({ usuario: user[0].usuario, role: user[0].role }, secret, { expiresIn: '1h' })
     res.cookie('jwt', token, { httpOnly: true })
     return res.redirect('/panel/')
   } catch (error) {
@@ -41,7 +41,7 @@ authRoutes.post('/register', async (req, res) => {
     const findUser = users.findIndex(o => o.usuario === usuario)
     if (findUser === -1) {
       const hashedPassword = await bcrypt.hash(passwd, 12)
-      await createUser(nombre, edad, usuario, hashedPassword)
+      await createUser(nombre, edad, usuario, hashedPassword, 'user')
       return res.redirect('/auth/login')
     }
     return res.redirect('/auth/register')

@@ -9,7 +9,7 @@ const getUserByUsername = async (usuario) => {
       .input('usuario', mssql.VarChar, usuario)
       .query(
         `
-          SELECT usuario, passwd
+          SELECT usuario, passwd, role
           FROM Usuario 
           WHERE Usuario.usuario = @usuario;
         `

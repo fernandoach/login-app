@@ -1,7 +1,7 @@
 import { getConnection } from '../db/context.js'
 import mssql from 'mssql'
 
-const createUser = async (nombre, edad, usuario, passwd) => {
+const createUser = async (nombre, edad, usuario, passwd, role) => {
   try {
     const connection = await getConnection()
     console.log(nombre, edad, usuario, passwd)
@@ -11,10 +11,11 @@ const createUser = async (nombre, edad, usuario, passwd) => {
       .input('edad', mssql.Int, edad)
       .input('usuario', mssql.VarChar, usuario)
       .input('passwd', mssql.VarChar, passwd)
+      .input('role', mssql.VarChar, role)
       .query(
         `
-          INSERT INTO Usuario(nombre, edad, usuario, passwd)
-          VALUES(@nombre, @edad, @usuario, @passwd);
+          INSERT INTO Usuario(nombre, edad, usuario, passwd, role)
+          VALUES(@nombre, @edad, @usuario, @passwd, @role);
         `
       )
     return query
