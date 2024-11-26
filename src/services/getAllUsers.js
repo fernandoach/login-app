@@ -7,7 +7,7 @@ const getAllUSers = async () => {
       .request()
       .query(
         `
-          SELECT usuario 
+          SELECT nombre, edad, usuario, role 
           FROM Usuario;
         `
       )

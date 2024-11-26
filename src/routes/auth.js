@@ -22,7 +22,11 @@ authRoutes.post('/login', async (req, res) => {
     const secret = process.env.JWT_SECRET
     const token = jwt.sign({ usuario: user[0].usuario, role: user[0].role }, secret, { expiresIn: '1h' })
     res.cookie('jwt', token, { httpOnly: true })
-    return res.redirect('/panel/')
+    if (user[0].role === 'admin') {
+      return res.redirect('/admin/panel')
+    } else {
+      return res.redirect('/panel/')
+    }
   } catch (error) {
     console.log(error)
     return res.json(error)
